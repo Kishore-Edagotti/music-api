@@ -86,7 +86,7 @@ body {
   padding-left: 7px;
 }
 .sidebar ul li:hover,
-.sidebar ul li:nth-child(1) {
+.sidebar ul li:first-child {
   background: linear-gradient(135deg, #6a5af9, #b16cea);
 }
 .content {
