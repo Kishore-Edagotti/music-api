@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SpotApi</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <header class="top-bar">
+        <div class="logo">
+          <span><img src="./assets/spotify.png" alt="spotifyLogo" /></span>
+          <span>SpotApi</span>
+        </div>
+
+        <nav class="top-nav">
+          <ul>
+            <li>
+              <img src="./assets/home (1).png" alt="Home logo" />
+            </li>
+            <li><img src="./assets/options.png" alt="menu logo" /></li>
+            <li>
+              <img src="./assets/notification.png" alt="notification logo" />
+            </li>
+            <li><img src="./assets/user (1).png" alt="Home logo" /></li>
+          </ul>
+        </nav>
+      </header>
+      <div class="main-content-container">
+        <div class="sidebar">
+          <ul>
+            <li id="home">Home</li>
+            <li>Movies</li>
+            <li>Artists</li>
+            <li>Albums</li>
+            <li>Favorites</li>
+            <li>Playlists</li>
+            <li>Settings</li>
+          </ul>
+        </div>
+        <main class="content">
+          <section class="search-section">
+            <input type="text" placeholder="Search" id="songInput" />
+            <button id="search">
+              <img src="./assets/search (1).png" alt="search btn" />
+            </button>
+          </section>
+
+          <section class="categories" id="categories">
+            <div class="category">
+              <img src="./assets/movieposter/download (3).jpg" alt="" />
+            </div>
+          </section>
+          <section class="music-player">
+            <div class="player-controls">
+              <div class="controls">
+                <button id="backward-btn">
+                  <img src="./assets/back.png" alt="back" />
+                </button>
+                <button id="play-pause-btn">
+                  <img src="./assets/play-button.png" alt="play" />
+                </button>
+                <button id="forward-btn">
+                  <img src="./assets/next (1).png" alt="forward" />
+                </button>
+              </div>
+              <div class="statusBar">
+                <input
+                  type="range"
+                  id="status"
+                  name="status"
+                  min="0"
+                  max="30"
+                  step="0.1"
+                  value="0"
+                />
+                <span id="timeLabel">0:00 / 0:30</span>
+              </div>
+            </div>
+
+            <div class="volume-controls">
+              <label for="volume">Volume</label>
+              <input
+                type="range"
+                id="volumeSlider"
+                min="0"
+                max="1"
+                step="0.01"
+                value="1"
+              />
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+  </body>
+  <script src="script.js"></script>
+</html>
