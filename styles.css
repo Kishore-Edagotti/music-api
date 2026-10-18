@@ -190,8 +190,11 @@ input, select, button {
   flex-shrink: 0;
 }
 .logo img {
-  height: 32px;
-  width: 32px;
+  height: 32px !important;
+  width: 32px !important;
+  max-width: 32px !important;
+  max-height: 32px !important;
+  object-fit: contain !important;
 }
 
 /* Spotify Signature Pill Search Bar */
@@ -326,8 +329,11 @@ input, select, button {
   font-size: 1.1rem;
 }
 .sidebar-logo img {
-  width: 28px;
-  height: 28px;
+  width: 28px !important;
+  height: 28px !important;
+  max-width: 28px !important;
+  max-height: 28px !important;
+  object-fit: contain !important;
 }
 .close-sidebar {
   width: 36px;

@@ -27,6 +27,12 @@ let settings  = JSON.parse(localStorage.getItem("sa_settings")  || JSON.stringif
   defaultLang: "telugu movie songs",
 }));
 
+// Auto-migrate legacy theme to Spotify Dark
+if (!settings.theme || settings.theme === "purple") {
+  settings.theme = "spotify";
+  localStorage.setItem("sa_settings", JSON.stringify(settings));
+}
+
 /* -------------------------------------------------------
    DOM REFS
 ------------------------------------------------------- */

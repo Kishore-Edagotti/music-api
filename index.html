@@ -4,7 +4,44 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>SpotApi — Web Player</title>
-    <link rel="stylesheet" href="styles.css" />
+
+    <!-- Critical Inlined CSS: Guarantees zero layout shifts and prevents cache desynchronization -->
+    <style>
+      *, *::before, *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html, body {
+        background-color: #121212 !important;
+        color: #ffffff;
+        font-family: -apple-system, BlinkMacSystemFont, "Circular Spotify Tx T", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+      }
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+      .logo img, .sidebar-logo img {
+        width: 32px !important;
+        height: 32px !important;
+        max-width: 32px !important;
+        max-height: 32px !important;
+        object-fit: contain !important;
+        flex-shrink: 0;
+      }
+      .page-section {
+        display: none !important;
+      }
+      .page-section.active {
+        display: block !important;
+      }
+    </style>
+
+    <!-- Versioned stylesheet link to invalidate old browser/CDN caches -->
+    <link rel="stylesheet" href="styles.css?v=20261018.3" />
   </head>
   <body>
     <div class="app-container">
@@ -15,11 +52,11 @@
           <span></span><span></span><span></span>
         </button>
         <div class="logo">
-          <img src="./assets/spotify.png" alt="SpotApi Logo" />
+          <img src="./assets/spotify.png" alt="SpotApi Logo" width="32" height="32" style="width:32px;height:32px;object-fit:contain;" />
           <span>SpotApi</span>
         </div>
 
-        <!-- Search Bar in Top Bar (Desktop & Mobile) -->
+        <!-- Search Bar in Header -->
         <div class="search-wrapper">
           <button id="search" aria-label="Search">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -56,7 +93,7 @@
         <aside class="sidebar" id="sidebar">
           <div class="sidebar-header">
             <div class="sidebar-logo">
-              <img src="./assets/spotify.png" alt="SpotApi Logo" />
+              <img src="./assets/spotify.png" alt="SpotApi Logo" width="28" height="28" style="width:28px;height:28px;object-fit:contain;" />
               <span>SpotApi</span>
             </div>
             <button class="close-sidebar" id="closeSidebar" aria-label="Close menu">
@@ -463,7 +500,7 @@
         </div>
 
         <div class="now-playing-info">
-          <img src="./assets/music.png" alt="Album Art" id="nowPlayingArt" />
+          <img src="./assets/music.png" alt="Album Art" id="nowPlayingArt" width="54" height="54" style="width:54px;height:54px;object-fit:cover;" />
           <div class="now-playing-text">
             <span id="nowPlayingTitle">No song playing</span>
             <span id="nowPlayingArtist" class="now-playing-artist">—</span>
@@ -613,6 +650,7 @@
       <div class="toast" id="toast"></div>
 
     </div>
-    <script src="script.js"></script>
+    <!-- Versioned script to bust client/proxy caches -->
+    <script src="script.js?v=20261018.3"></script>
   </body>
 </html>
