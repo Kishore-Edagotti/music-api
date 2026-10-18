@@ -2,98 +2,617 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SpotApi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>SpotApi — Web Player</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <div class="app-container">
+
+      <!-- ===== TOP BAR ===== -->
       <header class="top-bar">
+        <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu">
+          <span></span><span></span><span></span>
+        </button>
         <div class="logo">
-          <span><img src="./assets/spotify.png" alt="spotifyLogo" /></span>
+          <img src="./assets/spotify.png" alt="SpotApi Logo" />
           <span>SpotApi</span>
         </div>
 
+        <!-- Search Bar in Top Bar (Desktop & Mobile) -->
+        <div class="search-wrapper">
+          <button id="search" aria-label="Search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </button>
+          <input type="text" placeholder="What do you want to play?" id="songInput" autocomplete="off" />
+        </div>
+
         <nav class="top-nav">
-          <ul>
-            <li>
-              <img src="./assets/home (1).png" alt="Home logo" />
-            </li>
-            <li><img src="./assets/options.png" alt="menu logo" /></li>
-            <li>
-              <img src="./assets/notification.png" alt="notification logo" />
-            </li>
-            <li><img src="./assets/user (1).png" alt="Home logo" /></li>
-          </ul>
+          <button class="nav-icon-btn" title="Home" id="topHomeBtn" aria-label="Home">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+          </button>
+          <button class="nav-icon-btn profile-btn" title="Profile" id="profileBtn" aria-label="User profile">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </button>
         </nav>
       </header>
+
+      <!-- ===== MAIN LAYOUT ===== -->
       <div class="main-content-container">
-        <div class="sidebar">
-          <ul>
-            <li id="home">Home</li>
-            <li>Movies</li>
-            <li>Artists</li>
-            <li>Albums</li>
-            <li>Favorites</li>
-            <li>Playlists</li>
-            <li>Settings</li>
-          </ul>
-        </div>
-        <main class="content">
-          <section class="search-section">
-            <input type="text" placeholder="Search" id="songInput" />
-            <button id="search">
-              <img src="./assets/search (1).png" alt="search btn" />
+
+        <!-- SIDEBAR OVERLAY (mobile) -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <!-- ===== SIDEBAR ===== -->
+        <aside class="sidebar" id="sidebar">
+          <div class="sidebar-header">
+            <div class="sidebar-logo">
+              <img src="./assets/spotify.png" alt="SpotApi Logo" />
+              <span>SpotApi</span>
+            </div>
+            <button class="close-sidebar" id="closeSidebar" aria-label="Close menu">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
             </button>
+          </div>
+
+          <div class="sidebar-block">
+            <div class="sidebar-section-title">Navigation</div>
+            <ul class="sidebar-nav">
+              <li class="nav-item active" data-section="home">
+                <span class="nav-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                  </svg>
+                </span>
+                <span class="nav-label">Home</span>
+              </li>
+              <li class="nav-item" data-section="movies">
+                <span class="nav-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
+                    <line x1="7" y1="2" x2="7" y2="22"></line>
+                    <line x1="17" y1="2" x2="17" y2="22"></line>
+                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                    <line x1="2" y1="7" x2="7" y2="7"></line>
+                    <line x1="2" y1="17" x2="7" y2="17"></line>
+                    <line x1="17" y1="17" x2="22" y2="17"></line>
+                    <line x1="17" y1="7" x2="22" y2="7"></line>
+                  </svg>
+                </span>
+                <span class="nav-label">Movies</span>
+              </li>
+              <li class="nav-item" data-section="artists">
+                <span class="nav-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                    <line x1="12" y1="19" x2="12" y2="23"></line>
+                    <line x1="8" y1="23" x2="16" y2="23"></line>
+                  </svg>
+                </span>
+                <span class="nav-label">Artists</span>
+              </li>
+              <li class="nav-item" data-section="albums">
+                <span class="nav-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                </span>
+                <span class="nav-label">Albums</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="sidebar-block">
+            <div class="sidebar-section-title">Your Library</div>
+            <ul class="sidebar-nav">
+              <li class="nav-item" data-section="favorites">
+                <span class="nav-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                  </svg>
+                </span>
+                <span class="nav-label">Liked Songs</span>
+              </li>
+              <li class="nav-item" data-section="playlists">
+                <span class="nav-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="8" y1="6" x2="21" y2="6"></line>
+                    <line x1="8" y1="12" x2="21" y2="12"></line>
+                    <line x1="8" y1="18" x2="21" y2="18"></line>
+                    <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                    <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                    <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                  </svg>
+                </span>
+                <span class="nav-label">Playlists</span>
+              </li>
+              <li class="nav-item" data-section="settings">
+                <span class="nav-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                  </svg>
+                </span>
+                <span class="nav-label">Settings</span>
+              </li>
+            </ul>
+          </div>
+        </aside>
+
+        <!-- ===== MAIN CONTENT ===== -->
+        <main class="content">
+
+          <!-- ===== HOME SECTION ===== -->
+          <section class="page-section active" id="section-home">
+            <div class="section-header-row">
+              <h1 class="section-title">Trending Tracks</h1>
+              <span class="section-subtitle">Popular hits picked for you</span>
+            </div>
+            <div class="categories" id="categories">
+              <div class="skeleton-card"></div>
+              <div class="skeleton-card"></div>
+              <div class="skeleton-card"></div>
+              <div class="skeleton-card"></div>
+              <div class="skeleton-card"></div>
+              <div class="skeleton-card"></div>
+            </div>
           </section>
 
-          <section class="categories" id="categories">
-            <div class="category">
-              <img src="./assets/movieposter/download (3).jpg" alt="" />
+          <!-- ===== MOVIES SECTION ===== -->
+          <section class="page-section" id="section-movies">
+            <div class="section-header-row">
+              <h1 class="section-title">Movie Soundtracks</h1>
+              <span class="section-subtitle">Original songs from top cinema</span>
+            </div>
+            <div class="pill-tabs" id="movieTabs">
+              <button class="pill active" data-query="telugu movie songs">Telugu</button>
+              <button class="pill" data-query="hindi movie songs">Hindi</button>
+              <button class="pill" data-query="tamil movie songs">Tamil</button>
+              <button class="pill" data-query="malayalam movie songs">Malayalam</button>
+              <button class="pill" data-query="english movie soundtrack">English</button>
+            </div>
+            <div class="categories" id="movieCategories">
+              <div class="skeleton-card"></div>
+              <div class="skeleton-card"></div>
+              <div class="skeleton-card"></div>
+              <div class="skeleton-card"></div>
             </div>
           </section>
-          <section class="music-player">
-            <div class="player-controls">
-              <div class="controls">
-                <button id="backward-btn">
-                  <img src="./assets/back.png" alt="back" />
-                </button>
-                <button id="play-pause-btn">
-                  <img src="./assets/play-button.png" alt="play" />
-                </button>
-                <button id="forward-btn">
-                  <img src="./assets/next (1).png" alt="forward" />
-                </button>
-              </div>
-              <div class="statusBar">
-                <input
-                  type="range"
-                  id="status"
-                  name="status"
-                  min="0"
-                  max="30"
-                  step="0.1"
-                  value="0"
-                />
-                <span id="timeLabel">0:00 / 0:30</span>
-              </div>
-            </div>
 
-            <div class="volume-controls">
-              <label for="volume">Volume</label>
-              <input
-                type="range"
-                id="volumeSlider"
-                min="0"
-                max="1"
-                step="0.01"
-                value="1"
-              />
+          <!-- ===== ARTISTS SECTION ===== -->
+          <section class="page-section" id="section-artists">
+            <div class="section-header-row">
+              <h1 class="section-title">Popular Artists</h1>
+              <span class="section-subtitle">Select an artist to explore tracks</span>
+            </div>
+            <div class="artist-grid" id="artistGrid">
+              <div class="artist-card" data-query="Arijit Singh songs">
+                <div class="artist-avatar">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 18V5l12-2v13"></path>
+                    <circle cx="6" cy="18" r="3"></circle>
+                    <circle cx="18" cy="16" r="3"></circle>
+                  </svg>
+                </div>
+                <span class="artist-name">Arijit Singh</span>
+                <span class="artist-tag">Artist</span>
+              </div>
+              <div class="artist-card" data-query="A.R. Rahman songs">
+                <div class="artist-avatar">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 18V5l12-2v13"></path>
+                    <circle cx="6" cy="18" r="3"></circle>
+                    <circle cx="18" cy="16" r="3"></circle>
+                  </svg>
+                </div>
+                <span class="artist-name">A.R. Rahman</span>
+                <span class="artist-tag">Artist</span>
+              </div>
+              <div class="artist-card" data-query="Shreya Ghoshal songs">
+                <div class="artist-avatar">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                    <line x1="12" y1="19" x2="12" y2="23"></line>
+                    <line x1="8" y1="23" x2="16" y2="23"></line>
+                  </svg>
+                </div>
+                <span class="artist-name">Shreya Ghoshal</span>
+                <span class="artist-tag">Artist</span>
+              </div>
+              <div class="artist-card" data-query="Sid Sriram songs">
+                <div class="artist-avatar">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                    <line x1="12" y1="19" x2="12" y2="23"></line>
+                    <line x1="8" y1="23" x2="16" y2="23"></line>
+                  </svg>
+                </div>
+                <span class="artist-name">Sid Sriram</span>
+                <span class="artist-tag">Artist</span>
+              </div>
+              <div class="artist-card" data-query="Anirudh Ravichander songs">
+                <div class="artist-avatar">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 18V5l12-2v13"></path>
+                    <circle cx="6" cy="18" r="3"></circle>
+                    <circle cx="18" cy="16" r="3"></circle>
+                  </svg>
+                </div>
+                <span class="artist-name">Anirudh</span>
+                <span class="artist-tag">Artist</span>
+              </div>
+              <div class="artist-card" data-query="Taylor Swift songs">
+                <div class="artist-avatar">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                    <line x1="12" y1="19" x2="12" y2="23"></line>
+                    <line x1="8" y1="23" x2="16" y2="23"></line>
+                  </svg>
+                </div>
+                <span class="artist-name">Taylor Swift</span>
+                <span class="artist-tag">Artist</span>
+              </div>
+              <div class="artist-card" data-query="The Weeknd songs">
+                <div class="artist-avatar">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 18V5l12-2v13"></path>
+                    <circle cx="6" cy="18" r="3"></circle>
+                    <circle cx="18" cy="16" r="3"></circle>
+                  </svg>
+                </div>
+                <span class="artist-name">The Weeknd</span>
+                <span class="artist-tag">Artist</span>
+              </div>
+              <div class="artist-card" data-query="Ed Sheeran songs">
+                <div class="artist-avatar">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 18V5l12-2v13"></path>
+                    <circle cx="6" cy="18" r="3"></circle>
+                    <circle cx="18" cy="16" r="3"></circle>
+                  </svg>
+                </div>
+                <span class="artist-name">Ed Sheeran</span>
+                <span class="artist-tag">Artist</span>
+              </div>
+            </div>
+            <div class="categories hidden" id="artistSongs"></div>
+          </section>
+
+          <!-- ===== ALBUMS SECTION ===== -->
+          <section class="page-section" id="section-albums">
+            <div class="section-header-row">
+              <h1 class="section-title">Featured Albums</h1>
+              <span class="section-subtitle">Curated collections & records</span>
+            </div>
+            <div class="pill-tabs" id="albumTabs">
+              <button class="pill active" data-query="best album 2024">2024 Best</button>
+              <button class="pill" data-query="bollywood album hits">Bollywood</button>
+              <button class="pill" data-query="classical music album">Classical</button>
+              <button class="pill" data-query="pop music album">Pop</button>
+              <button class="pill" data-query="rock album songs">Rock</button>
+            </div>
+            <div class="categories" id="albumCategories">
+              <div class="skeleton-card"></div>
+              <div class="skeleton-card"></div>
+              <div class="skeleton-card"></div>
+              <div class="skeleton-card"></div>
             </div>
           </section>
+
+          <!-- ===== FAVORITES SECTION ===== -->
+          <section class="page-section" id="section-favorites">
+            <div class="section-header-row">
+              <h1 class="section-title">Liked Songs</h1>
+              <span class="section-subtitle">Your personal collection</span>
+            </div>
+            <div id="favoritesEmpty" class="empty-state">
+              <div class="empty-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+              </div>
+              <p>Songs you like will appear here</p>
+              <p class="empty-sub">Save songs by tapping the heart icon on any track.</p>
+            </div>
+            <div class="categories" id="favoritesGrid"></div>
+          </section>
+
+          <!-- ===== PLAYLISTS SECTION ===== -->
+          <section class="page-section" id="section-playlists">
+            <div class="section-header-row">
+              <h1 class="section-title">Your Playlists</h1>
+              <span class="section-subtitle">Create and manage customized lists</span>
+            </div>
+            <div class="playlist-actions">
+              <input type="text" id="newPlaylistName" placeholder="New playlist name..." />
+              <button class="btn-primary" id="createPlaylistBtn">Create Playlist</button>
+            </div>
+            <div id="playlistsContainer"></div>
+          </section>
+
+          <!-- ===== SETTINGS SECTION ===== -->
+          <section class="page-section" id="section-settings">
+            <div class="section-header-row">
+              <h1 class="section-title">Settings</h1>
+              <span class="section-subtitle">Manage audio preferences and experience</span>
+            </div>
+            <div class="settings-list">
+              <div class="settings-group">
+                <h3>Playback</h3>
+                <div class="setting-item">
+                  <div class="setting-item-label">
+                    <span>Autoplay</span>
+                    <small>Keep listening to similar songs when audio ends</small>
+                  </div>
+                  <label class="toggle-switch">
+                    <input type="checkbox" id="autoplayToggle" checked />
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+                <div class="setting-item">
+                  <div class="setting-item-label">
+                    <span>Loop Track</span>
+                    <small>Repeat current preview automatically</small>
+                  </div>
+                  <label class="toggle-switch">
+                    <input type="checkbox" id="loopToggle" />
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+                <div class="setting-item">
+                  <div class="setting-item-label">
+                    <span>Shuffle</span>
+                    <small>Play tracklist in random sequence</small>
+                  </div>
+                  <label class="toggle-switch">
+                    <input type="checkbox" id="shuffleToggle" />
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="settings-group">
+                <h3>Appearance & Grid</h3>
+                <div class="setting-item">
+                  <div class="setting-item-label">
+                    <span>Color Theme</span>
+                    <small>Choose visual accent palette</small>
+                  </div>
+                  <select id="themeSelect" class="settings-select">
+                    <option value="spotify" selected>Spotify Dark (Signature)</option>
+                    <option value="purple">Midnight Purple</option>
+                    <option value="blue">Deep Ocean</option>
+                    <option value="green">Neon Forest</option>
+                  </select>
+                </div>
+                <div class="setting-item">
+                  <div class="setting-item-label">
+                    <span>Card Size</span>
+                    <small>Tile density for track displays</small>
+                  </div>
+                  <select id="cardsPerRow" class="settings-select">
+                    <option value="3">Compact</option>
+                    <option value="2" selected>Standard</option>
+                    <option value="1">Spacious</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="settings-group">
+                <h3>Language & Defaults</h3>
+                <div class="setting-item">
+                  <div class="setting-item-label">
+                    <span>Home Music Language</span>
+                    <small>Default queries for trending tracks</small>
+                  </div>
+                  <select id="defaultLang" class="settings-select">
+                    <option value="telugu movie songs">Telugu</option>
+                    <option value="hindi movie songs">Hindi</option>
+                    <option value="tamil movie songs">Tamil</option>
+                    <option value="english pop songs">English</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="settings-group">
+                <h3>Data & Storage</h3>
+                <div class="setting-item">
+                  <div class="setting-item-label">
+                    <span>Clear Favorites</span>
+                    <small>Remove all saved liked songs</small>
+                  </div>
+                  <button class="btn-danger" id="clearFavBtn">Clear</button>
+                </div>
+                <div class="setting-item">
+                  <div class="setting-item-label">
+                    <span>Clear Playlists</span>
+                    <small>Erase all custom playlists</small>
+                  </div>
+                  <button class="btn-danger" id="clearPlaylistsBtn">Clear</button>
+                </div>
+              </div>
+            </div>
+          </section>
+
         </main>
       </div>
+
+      <!-- ===== NOW PLAYING BAR (Desktop Full / Mobile Floating Mini) ===== -->
+      <footer class="now-playing-bar" id="nowPlayingBar">
+        <!-- Thin bottom progress line for mobile mini-player -->
+        <div class="mobile-progress-track">
+          <div class="mobile-progress-fill" id="mobileProgressFill"></div>
+        </div>
+
+        <div class="now-playing-info">
+          <img src="./assets/music.png" alt="Album Art" id="nowPlayingArt" />
+          <div class="now-playing-text">
+            <span id="nowPlayingTitle">No song playing</span>
+            <span id="nowPlayingArtist" class="now-playing-artist">—</span>
+          </div>
+          <button class="fav-btn" id="nowPlayingFav" title="Save to Liked Songs" aria-label="Favorite">
+            <svg class="heart-outline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+            <svg class="heart-filled" viewBox="0 0 24 24" fill="#1ed760" stroke="#1ed760" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+          </button>
+        </div>
+
+        <div class="player-center">
+          <div class="controls">
+            <!-- Shuffle -->
+            <button class="ctrl-btn" id="shuffleBtn" title="Enable shuffle" aria-label="Shuffle">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="16 3 21 3 21 8"></polyline>
+                <line x1="4" y1="20" x2="21" y2="3"></line>
+                <polyline points="21 16 21 21 16 21"></polyline>
+                <line x1="15" y1="15" x2="21" y2="21"></line>
+              </svg>
+            </button>
+            <!-- Previous -->
+            <button class="ctrl-btn" id="backward-btn" title="Previous" aria-label="Previous track">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="19 20 9 12 19 4 19 20"></polygon>
+                <line x1="5" y1="19" x2="5" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"></line>
+              </svg>
+            </button>
+            <!-- Play / Pause -->
+            <button class="ctrl-btn play-btn" id="play-pause-btn" title="Play / Pause" aria-label="Play or Pause">
+              <svg id="iconPlay" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="6 4 20 12 6 20 6 4"></polygon>
+              </svg>
+              <svg id="iconPause" viewBox="0 0 24 24" fill="currentColor" style="display:none">
+                <rect x="6" y="4" width="4" height="16" rx="1.5"></rect>
+                <rect x="14" y="4" width="4" height="16" rx="1.5"></rect>
+              </svg>
+            </button>
+            <!-- Next -->
+            <button class="ctrl-btn" id="forward-btn" title="Next" aria-label="Next track">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="5 4 15 12 5 20 5 4"></polygon>
+                <line x1="19" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"></line>
+              </svg>
+            </button>
+            <!-- Loop -->
+            <button class="ctrl-btn" id="loopBtn" title="Enable repeat" aria-label="Repeat">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="17 1 21 5 17 9"></polyline>
+                <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
+                <polyline points="7 23 3 19 7 15"></polyline>
+                <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
+              </svg>
+            </button>
+          </div>
+
+          <div class="statusBar">
+            <span id="currentTime">0:00</span>
+            <div class="range-wrap">
+              <input type="range" id="status" name="status" min="0" max="30" step="0.1" value="0" aria-label="Seek track position" />
+              <div class="range-fill" id="progressFill"></div>
+            </div>
+            <span id="timeLabel">0:30</span>
+          </div>
+        </div>
+
+        <div class="volume-controls">
+          <svg class="vol-icon" viewBox="0 0 24 24" fill="currentColor">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"></path>
+          </svg>
+          <div class="range-wrap">
+            <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="1" aria-label="Adjust volume" />
+            <div class="range-fill" id="volumeFill"></div>
+          </div>
+        </div>
+      </footer>
+
+      <!-- ===== BOTTOM NAV (Mobile Signature) ===== -->
+      <nav class="bottom-nav" id="bottomNav">
+        <button class="bnav-btn active" data-section="home">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+          <span>Home</span>
+        </button>
+        <button class="bnav-btn" data-section="movies">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
+            <line x1="7" y1="2" x2="7" y2="22"></line>
+            <line x1="17" y1="2" x2="17" y2="22"></line>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <line x1="2" y1="7" x2="7" y2="7"></line>
+            <line x1="2" y1="17" x2="7" y2="17"></line>
+            <line x1="17" y1="17" x2="22" y2="17"></line>
+            <line x1="17" y1="7" x2="22" y2="7"></line>
+          </svg>
+          <span>Movies</span>
+        </button>
+        <button class="bnav-btn" data-section="artists">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+            <line x1="12" y1="19" x2="12" y2="23"></line>
+            <line x1="8" y1="23" x2="16" y2="23"></line>
+          </svg>
+          <span>Artists</span>
+        </button>
+        <button class="bnav-btn" data-section="favorites">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+          <span>Liked</span>
+        </button>
+        <button class="bnav-btn" data-section="settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+          <span>Settings</span>
+        </button>
+      </nav>
+
+      <!-- ===== ADD TO PLAYLIST MODAL ===== -->
+      <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+          <div class="modal-header">
+            <h3>Add to Playlist</h3>
+            <button class="modal-close-icon" id="modalCloseIcon" aria-label="Close dialog">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+          <div id="modalPlaylistList"></div>
+          <button class="btn-secondary" id="modalClose">Close</button>
+        </div>
+      </div>
+
+      <!-- TOAST NOTIFICATION -->
+      <div class="toast" id="toast"></div>
+
     </div>
+    <script src="script.js"></script>
   </body>
-  <script src="script.js"></script>
 </html>
